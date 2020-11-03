@@ -3,16 +3,16 @@
 import logging
 import sys
 import numpy as np
-from keras.models import Model
-from keras.layers import Input, Activation, add, Dense, Flatten, Dropout, Multiply, Embedding, Lambda, Add, Concatenate, Activation
-from keras.layers.convolutional import Conv2D, AveragePooling2D, MaxPooling2D
-from keras.layers.normalization import BatchNormalization
-from keras.regularizers import l2
-from keras import backend as K
-from keras.optimizers import SGD,Adam
-from keras.applications.mobilenet import MobileNet
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input, Activation, add, Dense, Flatten, Dropout, Multiply, Embedding, Lambda, Add, Concatenate, Activation
+from tensorflow.keras.layers import Conv2D, AveragePooling2D, MaxPooling2D
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.regularizers import l2
+from tensorflow.keras import backend as K
+from tensorflow.keras.optimizers import SGD,Adam
+from tensorflow.keras.applications import MobileNet
 from densenet import *
-from keras.utils import plot_model
+from tensorflow.keras.utils import plot_model
 
 sys.setrecursionlimit(2 ** 20)
 np.random.seed(2 ** 10)
@@ -21,22 +21,27 @@ np.random.seed(2 ** 10)
 class TYY_MobileNet_reg:
     def __init__(self, image_size, alpha):
         
-
-        if K.image_dim_ordering() == "th":
-            logging.debug("image_dim_ordering = 'th'")
+        if K.image_data_format() == 'channels_first':
+        #if K.common.image_dim_ordering() == "th":
+            logging.debug("image_data_format = 'channels_first'")
             self._channel_axis = 1
             self._input_shape = (3, image_size, image_size)
         else:
-            logging.debug("image_dim_ordering = 'tf'")
+            logging.debug("image_data_format = 'channels_last'")
             self._channel_axis = -1
             self._input_shape = (image_size, image_size, 3)
         self.alpha = alpha
+        logging.debug("channel_axis={}".format(self._channel_axis))
+        logging.debug("input_shape={}".format(self._input_shape))
+        logging.debug("alpha={}".format(self.alpha))
 
 #    def create_model(self):
     def __call__(self):
         logging.debug("Creating model...")
 
         inputs = Input(shape=self._input_shape)
+        logging.debug("input_shape={}".format(type(inputs)))
+        #inputs = Input(shape=(64, 64, 3))
         model_mobilenet = MobileNet(input_shape=self._input_shape, alpha=self.alpha, depth_multiplier=1, dropout=1e-3, include_top=False, weights=None, input_tensor=None, pooling=None)
         x = model_mobilenet(inputs)
         #flatten = Flatten()(x)
@@ -56,7 +61,7 @@ class TYY_MobileNet_reg:
 class TYY_DenseNet_reg:
     def __init__(self, image_size, depth):
         
-        if K.image_dim_ordering() == "th":
+        if K.common.image_dim_ordering() == "th":
             logging.debug("image_dim_ordering = 'th'")
             self._channel_axis = 1
             self._input_shape = (3, image_size, image_size)

@@ -1,10 +1,10 @@
-import keras
+import tensorflow.keras as keras
 from sklearn.metrics import roc_auc_score
 import sys
 import matplotlib.pyplot as plt
-from keras.models import Model
+from tensorflow.keras.models import Model
 import numpy as np
-from keras import backend as K
+from tensorflow.keras import backend as K
 
 
 class DecayLearningRate(keras.callbacks.Callback):

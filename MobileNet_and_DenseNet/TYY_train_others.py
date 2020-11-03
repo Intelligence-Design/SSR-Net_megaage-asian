@@ -2,20 +2,20 @@ import pandas as pd
 import logging
 import argparse
 import os
-from keras.callbacks import ModelCheckpoint
-from keras.optimizers import Adam
+from tensorflow.keras.callbacks import ModelCheckpoint
+from tensorflow.keras.optimizers import Adam
 from TYY_model import TYY_MobileNet_reg, TYY_DenseNet_reg
 from TYY_utils import mk_dir, load_data_npz
 import sys
 import numpy as np
-from keras.preprocessing.image import ImageDataGenerator
-from keras.applications.mobilenet import MobileNet
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.applications.mobilenet import MobileNet
 import TYY_callbacks
-from keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 '''from mixup_generator import MixupGenerator'''
 '''from random_eraser import get_random_eraser'''
 from TYY_generators import *
-from keras.utils import plot_model
+from tensorflow.keras.utils import plot_model
 from moviepy.editor import *
 
 logging.basicConfig(level=logging.DEBUG)
@@ -54,8 +54,10 @@ def main():
 
     logging.debug("Loading training data...")
     image1, age1, image_size = load_data_npz(input_path1)
+    logging.debug("training data image size: {}".format(image_size))
     logging.debug("Loading testing data...")
     image2, age2, image_size = load_data_npz(input_path2)
+    logging.debug("testing data image size: {}".format(image_size))
     
 
     start_decay_epoch = [30,60]

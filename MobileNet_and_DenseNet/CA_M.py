@@ -25,6 +25,7 @@ image2, age2, image_size = load_data_npz(test_file)
 if netType == 1:
     alpha = 0.25
     model_file = 'megaage_models/MobileNet/batch_size_50/mobilenet_reg_0.25_64/mobilenet_reg_0.25_64.h5'
+    model_file = 'megaage_models/MobileNet/batch_size_50/mobilenet_reg_0.25_66/mobilenet_reg_0.25_66.h5'
     model = TYY_MobileNet_reg(image_size,alpha)()
     mk_dir('Results_csv')
     save_name = 'Results_csv/mobilenet_reg_%s_%d.csv' % (alpha, image_size)
@@ -32,6 +33,7 @@ if netType == 1:
 elif netType == 2:
     alpha = 0.5
     model_file = 'megaage_models/MobileNet/batch_size_50/mobilenet_reg_0.5_64/mobilenet_reg_0.5_64.h5'
+    model_file = 'megaage_models/MobileNet/batch_size_50/mobilenet_reg_0.5_66/mobilenet_reg_0.5_66.h5'
     model = TYY_MobileNet_reg(image_size,alpha)()
     mk_dir('Results_csv')
     save_name = 'Results_csv/mobilenet_reg_%s_%d.csv' % (alpha, image_size)

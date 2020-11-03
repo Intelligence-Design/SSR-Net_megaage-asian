@@ -1,8 +1,8 @@
 #https://github.com/titu1994/DenseNet
 import tensorflow as tf
 
-from keras.backend import tensorflow_backend as KTF
-from keras.backend.common import image_data_format
+#from tensorflow.keras.backend import tensorflow_backend as KTF
+from tensorflow.keras.backend import image_data_format
 
 py_all = all
 
